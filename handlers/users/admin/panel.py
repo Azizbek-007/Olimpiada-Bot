@@ -2,7 +2,7 @@ from aiogram import types
 from loader import dp, bot_id
 from aiogram.dispatcher.storage import FSMContext
 from states import StateCreateOlimpiada, StateSendMessage, StateChannelAdd, StateRank
-from keyboards.inline import admin_btn, cancel_btn, olimpiada_set_btn, olimpiada_list_btn
+from keyboards.inline import admin_btn, cancel_btn, olimpiada_set_btn, olimpiada_list_btn, delete_channel_btn
 from utils.db_api import db, DBS
 import asyncio
 
@@ -112,19 +112,31 @@ async def xsl_dowload_func(msg: types.Message, state: FSMContext):
 @dp.callback_query_handler(text="addChannel")
 async def bot_add_channel_procces(call: types.CallbackQuery):
     await StateChannelAdd.promis.set()
-    await call.message.answer("Kanaldan forward qilib xabr yuboring....", reply_markup=cancel_btn)
+    await call.message.answer("Kanaldan forward qilip xabr jiberin....", reply_markup=cancel_btn)
 
 @dp.message_handler(state=StateChannelAdd.promis)
 async def bot_is_forward(msg: types.Message, state: FSMContext):
-    channel = msg.forward_from_chat
-    if channel.type == "channel":
-        get = await dp.bot.get_chat_member(channel.id, bot_id)
-        if get.status == 'administrator':
-            create_link = await dp.bot.create_chat_invite_link(channel.id)
-            link = create_link.invite_link
-            DBS._set_new_channel(DBS, channel.id, link)
-            await msg.answer("Kanal qosildi")
-        else: await msg.answer("Bot kanalg'a admin bolmag'an")
-    else: await msg.answer("Botqa tek kanal qosa alasiz")
+    try:
+        channel = msg.forward_from_chat
+        if channel.type == "channel":
+            get = await dp.bot.get_chat_member(channel.id, bot_id)
+            if get.status == 'administrator':
+                create_link = await dp.bot.create_chat_invite_link(channel.id)
+                link = create_link.invite_link
+                DBS._set_new_channel(DBS, channel.id, link)
+                await msg.answer("Kanal qosildi")
+            else: await msg.answer("Bot kanalg'a admin bolmag'an")
+        else: await msg.answer("Botqa tek kanal qosa alasiz")
+    except: await msg.answer("Kanaldan forward qilip xabr jiberin....")
     await state.finish()
 
+@dp.callback_query_handler(text="deleteChannel")
+async def deleteChannel(call: types.CallbackQuery):
+    await call.message.answer("Kanallar", reply_markup=delete_channel_btn())
+
+@dp.callback_query_handler(lambda call: call.data.startswith("ChannelDelete="))
+async def delete_channel_pr(call: types.CallbackQuery):
+    channel_id = str(call.data).split('=')[1]
+    await call.answer(channel_id)
+    DBS._delete_channel(DBS, channel_id)
+    await call.message.edit_text("Kanallar", reply_markup=delete_channel_btn())

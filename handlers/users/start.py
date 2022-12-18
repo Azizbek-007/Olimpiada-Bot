@@ -9,11 +9,37 @@ from utils.db_api import db, DBS
 from keyboards.inline import lang_btn, channels_btn
 from keyboards.default import olimpiada_btn
 from lang.message import lang
-from filters import IsJoined
+from filters import IsJoined, Is_Joined
+
+
+@dp.callback_query_handler(Is_Joined(), text='channelCheck', state='*')
+async def check_joined(call: types.CallbackQuery):
+    await call.answer("Ele hamme kanalga agaza bolmadin'iz")
+    
+@dp.callback_query_handler(text='channelCheck', state='*')
+async def check_joined(call: types.CallbackQuery):
+    await call.message.delete()
+    UserLang = DBS.user_lang(DBS, call.from_user.id)
+    if UserLang:
+        await call.message.answer(
+                "menu",
+                reply_markup=olimpiada_btn())
+    else: 
+        await call.message.answer(
+                "Выберите язык, который вам удобен:",
+                reply_markup=lang_btn)
 
 @dp.message_handler(IsJoined(), content_types=types.ContentTypes.ANY, state='*')
 async def check_channel_join(msg: types.Message):
-    await msg.answer("To'mendegi kanalarg'a ag'za bolmasan'iz bottan paydalana almaysiz", reply_markup=channels_btn())
+    DBS.register_user(DBS, user=msg.from_id, username=msg.from_user.username,
+        first_name=msg.from_user.first_name, last_name=msg.from_user.last_name)
+    UserLang = DBS.user_lang(DBS, msg.from_id)
+    if UserLang:
+        await msg.answer("To'mendegi kanalarg'a ag'za bolmasan'iz bottan paydalana almaysiz", reply_markup=channels_btn())
+    else:
+        await msg.answer(
+                "Выберите язык, который вам удобен:",
+                reply_markup=lang_btn)
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
@@ -88,28 +114,32 @@ async def lang_setting(msg: types.Message):
 
 @dp.message_handler(regexp="[0-9]+[*][a-z]+$")
 async def me_send_answers(msg: types.Message):
-    text, check, i, t = msg.text.split('*'), "", 0, 0
-    if DBS._check_rank(DBS, msg.from_id, text[0]) == False:
-        await msg.answer("Siz aldin usi olimpiadaga qatnasqansiz")
+    check_date = DBS._start_user_olimpiada(DBS)
+    if check_date == []: 
+        await msg.answer("Olimpiada ele baslanbadi")
     else:
-        try:     
-            Olimpiada = DBS.ByOlimpiada(DBS, text[0])
-            for x in Olimpiada[0][2]:
-                try:
-                    if str(text[1][i]) == str(x):
-                        i +=1
-                        t +=1
-                        check += f"{i}) ✅\t\t"
-                    else: 
+        text, check, i, t = msg.text.split('*'), "", 0, 0
+        if DBS._check_rank(DBS, msg.from_id, text[0]) == False:
+            await msg.answer("Siz aldin usi olimpiadaga qatnasqansiz")
+        else:
+            try:     
+                Olimpiada = DBS.ByOlimpiada(DBS, text[0])
+                for x in Olimpiada[0][2]:
+                    try:
+                        if str(text[1][i]).upper() == str(x).upper():
+                            i +=1
+                            t +=1
+                            check += f"{i}) ✅\t\t"
+                        else: 
+                            i +=1
+                            check += f"{i}) ❌\t\t"
+                    except Exception as e:
                         i +=1
                         check += f"{i}) ❌\t\t"
-                except Exception as e:
-                    i +=1
-                    check += f"{i}) ❌\t\t"
-                if i % 3 == 0: 
-                    check +="\n" 
-                
-            procent = round(((t * 100)/i), 2)
-            DBS._set_rank(DBS, msg.from_id, Olimpiada[0][0], procent)
-            await msg.answer(f"{check}\n<b>{Olimpiada[0][1]}</b>\nprocent: <b>{procent}%</b>")    
-        except: await msg.reply("olimpiada tabilmadi")
+                    if i % 3 == 0: 
+                        check +="\n" 
+                    
+                procent = round(((t * 100)/i), 2)
+                DBS._set_rank(DBS, msg.from_id, Olimpiada[0][0], procent)
+                await msg.answer(f"{check}\n<b>{Olimpiada[0][1]}</b>\nprocent: <b>{procent}%</b>")    
+            except: await msg.reply("olimpiada tabilmadi")

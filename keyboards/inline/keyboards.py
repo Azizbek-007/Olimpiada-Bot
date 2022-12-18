@@ -44,3 +44,11 @@ def channels_btn():
         i +=1
     markup.add(InlineKeyboardButton("✅ Ag'za boldim", callback_data="channelCheck"))
     return markup
+
+def delete_channel_btn():
+    markup = InlineKeyboardMarkup()
+    i = 1
+    for x in DBS._get_channels(DBS):
+        markup.add(InlineKeyboardButton(f"{i}-kanal", url=x[1]), InlineKeyboardButton("🗑", callback_data=f"ChannelDelete={x[0]}"))
+        i +=1
+    return markup
