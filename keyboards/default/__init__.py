@@ -1,0 +1,1 @@
+from .keyboards import register_btn, olimpiada_btn
