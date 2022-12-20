@@ -114,9 +114,10 @@ async def bot_add_channel_procces(call: types.CallbackQuery):
     await StateChannelAdd.promis.set()
     await call.message.answer("Kanaldan forward qilip xabr jiberin....", reply_markup=cancel_btn)
 
-@dp.message_handler(state=StateChannelAdd.promis)
+@dp.message_handler(state=StateChannelAdd.promis, content_types=types.ContentTypes.ANY)
 async def bot_is_forward(msg: types.Message, state: FSMContext):
     try:
+        print('ok')
         channel = msg.forward_from_chat
         if channel.type == "channel":
             get = await dp.bot.get_chat_member(channel.id, bot_id)

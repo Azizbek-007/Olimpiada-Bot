@@ -2,11 +2,11 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from lang.message import lang
 from utils.db_api import DBS
 
+ifo_btn = InlineKeyboardButton(text="Edit IFO", callback_data="EDITIFO")
+    
 lang_btn = InlineKeyboardMarkup().add(
     InlineKeyboardButton(text="Qaraqalpaq tili", callback_data="lang=qq"),
     InlineKeyboardButton(text="Русский", callback_data="lang=ru")
-    ).add(
-    InlineKeyboardButton(text="Edit IFO", callback_data="EDITIFO")
     )
 
 admin_btn = InlineKeyboardMarkup().add(
@@ -20,6 +20,7 @@ admin_btn = InlineKeyboardMarkup().add(
     ).add(
         InlineKeyboardButton("Get Rank", callback_data="GetRank")
     )
+
 cancel_btn = InlineKeyboardMarkup().add(
     InlineKeyboardButton("cancel", callback_data="cancel")
     )

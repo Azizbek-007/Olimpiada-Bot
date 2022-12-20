@@ -6,7 +6,7 @@ from keyboards.default import register_btn
 from loader import dp
 from states import StateRegister
 from utils.db_api import db, DBS
-from keyboards.inline import lang_btn, channels_btn
+from keyboards.inline import lang_btn, channels_btn, ifo_btn
 from keyboards.default import olimpiada_btn
 from lang.message import lang
 from filters import IsJoined, Is_Joined
@@ -15,7 +15,7 @@ from filters import IsJoined, Is_Joined
 @dp.callback_query_handler(Is_Joined(), text='channelCheck', state='*')
 async def check_joined(call: types.CallbackQuery):
     await call.answer("Ele hamme kanalga agaza bolmadin'iz")
-    
+
 @dp.callback_query_handler(text='channelCheck', state='*')
 async def check_joined(call: types.CallbackQuery):
     await call.message.delete()
@@ -110,7 +110,7 @@ async def olimpiada_list(msg: types.Message):
 @dp.message_handler(text="Til nastroykası")
 async def lang_setting(msg: types.Message):
     UserLang = DBS.user_lang(DBS, msg.from_id)
-    await msg.answer(lang.get("set_lang").get(UserLang), reply_markup=lang_btn)
+    await msg.answer(lang.get("set_lang").get(UserLang), reply_markup=lang_btn.add(ifo_btn))
 
 @dp.message_handler(regexp="[0-9]+[*][a-z]+$")
 async def me_send_answers(msg: types.Message):
