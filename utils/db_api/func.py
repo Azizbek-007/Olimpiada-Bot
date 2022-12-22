@@ -3,6 +3,7 @@ import sqlite3
 from time import ctime
 from datetime import datetime
 from xlsxwriter.workbook import Workbook
+import pytz
 
 class DBS:
     def post_sql_query(sql_query):
@@ -72,22 +73,22 @@ class DBS:
         self.post_sql_query(query)
     
     def _start_user_olimpiada(self):
-        date = datetime.now().strftime("%Y-%m-%d")
-        _time = datetime.now().strftime("%H:%M")
+        date = datetime.now(pytz.timezone('Asia/Tashkent')).strftime("%Y-%m-%d")
+        _time = datetime.now(pytz.timezone('Asia/Tashkent')).strftime("%H:%M")
         query = f"SELECT * FROM olimpiada WHERE start >= '{date}' and 'end' >= '{date}' and end_time >= time('{_time}') and start_time <= time('{_time}')"
         data = self.post_sql_query(query)
         return data
         
     def get_olimpiada(self):
-        date = datetime.now().strftime("%Y-%m-%d")
-        _time = datetime.now().strftime("%H:%M")
+        date = datetime.now(pytz.timezone('Asia/Tashkent')).strftime("%Y-%m-%d")
+        _time = datetime.now(pytz.timezone('Asia/Tashkent')).strftime("%H:%M")
         query = f"SELECT * FROM olimpiada WHERE start >= '{date}' and 'end' >= '{date}' and end_time >= '{_time}'"
         data = self.post_sql_query(query)
         return data
     
     def ByOlimpiada(self, _id):
-        date = datetime.now().strftime("%Y-%m-%d")
-        _time = datetime.now().strftime("%H:%M")
+        date = datetime.now(pytz.timezone('Asia/Tashkent')).strftime("%Y-%m-%d")
+        _time = datetime.now(pytz.timezone('Asia/Tashkent')).strftime("%H:%M")
         query = f"SELECT * FROM olimpiada WHERE start >= '{date}' and 'end' >= '{date}' and end_time >= time('{_time}') and start_time <= time('{_time}') and id={_id}"
         data = self.post_sql_query(query)
         return data
