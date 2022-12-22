@@ -74,7 +74,7 @@ class DBS:
     def _start_user_olimpiada(self):
         date = datetime.now().strftime("%Y-%m-%d")
         _time = datetime.now().strftime("%H:%M")
-        query = f"SELECT * FROM olimpiada WHERE start >= '{date}' and 'end' >= '{date}' and end_time >= '{_time}' and start_time <= '{_time}'"
+        query = f"SELECT * FROM olimpiada WHERE start >= '{date}' and 'end' >= '{date}' and end_time >= time('{_time}') and start_time <= time('{_time}')"
         data = self.post_sql_query(query)
         return data
         
@@ -82,14 +82,13 @@ class DBS:
         date = datetime.now().strftime("%Y-%m-%d")
         _time = datetime.now().strftime("%H:%M")
         query = f"SELECT * FROM olimpiada WHERE start >= '{date}' and 'end' >= '{date}' and end_time >= '{_time}'"
-        print(query)
         data = self.post_sql_query(query)
         return data
     
     def ByOlimpiada(self, _id):
         date = datetime.now().strftime("%Y-%m-%d")
         _time = datetime.now().strftime("%H:%M")
-        query = f"SELECT * FROM olimpiada WHERE start >= '{date}' and start_time > '{_time}' and id={_id}"
+        query = f"SELECT * FROM olimpiada WHERE start >= '{date}' and 'end' >= '{date}' and end_time >= time('{_time}') and start_time <= time('{_time}') and id={_id}"
         data = self.post_sql_query(query)
         return data
 

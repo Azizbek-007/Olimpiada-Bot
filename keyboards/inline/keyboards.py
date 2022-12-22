@@ -2,7 +2,12 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from lang.message import lang
 from utils.db_api import DBS
 
-ifo_btn = InlineKeyboardButton(text="Edit IFO", callback_data="EDITIFO")
+def ifo_btn(user_lang):
+    text = lang.get("lang_btn").get(user_lang)
+    return InlineKeyboardMarkup().add(
+    InlineKeyboardButton(text="Qaraqalpaq tili", callback_data="lang=qq"),
+    InlineKeyboardButton(text="Русский", callback_data="lang=ru")
+    ).add(InlineKeyboardButton(text=text[2], callback_data="EDITIFO"))
     
 lang_btn = InlineKeyboardMarkup().add(
     InlineKeyboardButton(text="Qaraqalpaq tili", callback_data="lang=qq"),
