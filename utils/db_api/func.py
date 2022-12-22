@@ -93,7 +93,7 @@ class DBS:
         return data
 
     def delete_olimpiada(self, olimpiada_id):
-        query = f"DELETE FROM olimpiada WHERE id={olimpiada_id}"
+        query = f"DELETE FROM olimpiada WHERE id={olimpiada_id}" 
         self.post_sql_query(query)
 
     def _check_rank(self, user_id, olimpiada_id)-> bool:
