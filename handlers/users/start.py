@@ -55,21 +55,26 @@ async def bot_start(message: types.Message):
         await message.answer(
                 "Выберите язык, который вам удобен:",
                 reply_markup=lang_btn)
-
+    
 @dp.message_handler(lambda msg: msg.text == lang.get("menu").get(DBS.user_lang(DBS, msg.from_id))[0])
 async def olimpiada_list(msg: types.Message):
     UserLang = DBS.user_lang(DBS, msg.from_id)
-    try:
-        _list = DBS.get_olimpiada(DBS)
-        text, i = "", 1
-        for x in _list:
-            print(x)
-            text += lang.get("olimpiada_list_text").get(UserLang).format(x[1], x[3], x[5], x[4], x[6], x[0])
-            i +=1
-        await msg.reply(text)
-    
-    except: 
-        await msg.reply(lang.get("no_olimpiada").get(UserLang))
+    if DBS.user_fullname(DBS, msg.from_id) == False:
+        await msg.answer(
+                lang.get("register").get(UserLang),
+                reply_markup=register_btn(UserLang))
+    else:
+        try:
+            _list = DBS.get_olimpiada(DBS)
+            text, i = "", 1
+            for x in _list:
+                print(x)
+                text += lang.get("olimpiada_list_text").get(UserLang).format(x[1], x[3], x[5], x[4], x[6], x[0])
+                i +=1
+            await msg.reply(text)
+        
+        except: 
+            await msg.reply(lang.get("no_olimpiada").get(UserLang))
 
 @dp.message_handler(lambda msg: msg.text == lang.get("menu").get(DBS.user_lang(DBS, msg.from_id))[1])
 async def lang_setting(msg: types.Message):
@@ -86,15 +91,9 @@ async def _set_lang(msg: types.Message):
 @dp.message_handler(lambda msg: msg.text == lang.get("register_btn").get(DBS.user_lang(DBS, msg.from_id)))
 async def user_register(msg: types.Message):
     UserLang = DBS.user_lang(DBS, msg.from_id)
-    await msg.answer(lang.get("register_exsample").get(UserLang))
+    await msg.answer(lang.get("register_example").get(UserLang))
     await StateRegister.next()
 
-@dp.message_handler(lambda msg: DBS.user_fullname(DBS, msg.from_id) == False)
-async def _set_lang(msg: types.Message):
-    UserLang = DBS.user_lang(DBS, msg.from_id)
-    await msg.answer(
-                lang.get("register").get(UserLang),
-                reply_markup=register_btn())
 
 @dp.callback_query_handler(text="EDITIFO")
 async def update_user_ifo(call: types.CallbackQuery):

@@ -1,8 +1,9 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from lang.message import lang
-def register_btn():
+
+def register_btn(user_lang):
     return ReplyKeyboardMarkup(resize_keyboard=True).add(
-        KeyboardButton("Ro‘yxatdan o‘tish")
+        KeyboardButton(lang.get("register_btn").get(user_lang))
     )
 
 def olimpiada_btn(user_lang):
