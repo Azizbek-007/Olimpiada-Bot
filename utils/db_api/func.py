@@ -104,7 +104,7 @@ class DBS:
         else: return False
 
     def _set_rank(self, user_id, olimpiada_id, check):
-        _time = datetime.now().strftime("%H:%M:%S")
+        _time = datetime.now(pytz.timezone('Asia/Tashkent')).strftime("%H:%M:%S")
         fullname = self.post_sql_query(f"SELECT full_name FROM USERS where user_id={user_id}")[0][0]
         print(fullname)
         query = 'INSERT INTO olimpiada_rank("user_id","full_name", "olimpiada_id", "check", "send_time") VALUES' \
