@@ -124,7 +124,7 @@ async def set_fullname(msg: types.Message, state: FSMContext):
 async def me_send_answers(msg: types.Message):
     check_date = DBS._start_user_olimpiada(DBS)
     UserLang = DBS.user_lang(DBS, msg.from_id)
-    if check_date == []: 
+    if check_date == [] or len(check_date) == 0: 
         await msg.reply(lang.get("not_started").get(UserLang))
     else:
         text, check, i, t = msg.text.split('*'), "", 0, 0
