@@ -168,17 +168,18 @@ class DBS:
         if data== None: return False
         f1=workbook.add_format({'bold':True, 'border':1, 'border_color': 'black', 'align':'center'})
         f2=workbook.add_format({'border':1, 'border_color':'black', 'align':'center'})
-        worksheet.write_row('A1', ['user_id','username', 'first_name', 'last_name', 'lang', 'registed_date', 'registed_full_name'], f1)
+        worksheet.write_row('A1', ['#','user_id','username', 'first_name', 'last_name', 'lang', 'registed_date', 'registed_full_name'], f1)
         for i, row in enumerate(data):
             print(row[1])
             i+=1
             worksheet.write(i, 0, i, f2)
-            worksheet.write(i, 1, row[1], f2)
-            worksheet.write(i, 2, row[2], f2)
-            worksheet.write(i, 3, row[3], f2)
-            worksheet.write(i, 4, row[4], f2)
-            worksheet.write(i, 5, row[5], f2)
-            worksheet.write(i, 6, row[6], f2)
+            worksheet.write(i, 1, row[0], f2)
+            worksheet.write(i, 2, row[1], f2)
+            worksheet.write(i, 3, row[2], f2)
+            worksheet.write(i, 4, row[3], f2)
+            worksheet.write(i, 5, row[4], f2)
+            worksheet.write(i, 6, row[5], f2)
+            worksheet.write(i, 7, row[6], f2)
         worksheet.set_column('A:A', 11)
         worksheet.set_column('B:B', 20)
         worksheet.set_column('C:C', 40)
@@ -186,6 +187,7 @@ class DBS:
         worksheet.set_column('E:E', 20)
         worksheet.set_column('F:F', 20)
         worksheet.set_column('G:G', 20)
+        worksheet.set_column('H:H', 20)
         workbook.close()
          
 
