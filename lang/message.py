@@ -1,48 +1,66 @@
 lang = {
     "join": {
-        "qq": "Bottan paydalanıw ushın usınıs etilgen kanallarǵa aǵza bolıwıńız kerek."
+        "qq": "Bottan paydalanıw ushın usınıs etilgen kanallarǵa aǵza bolıwıńız kerek.",
+        "ru": "Чтобы использовать бота, вы должны подписаться на следующие каналы"
     },
     "no_join": {
-        "qq": "Ele barlıq kanallarǵa aǵza bolmadıńız"
+        "qq": "Ele barlıq kanallarǵa aǵza bolmadıńız!",
+        "ru": "Вы не подписаны на все каналы!"
     },
 
     "register": {
-        "qq": 'Dizimnen ótiw ushın tómendegi "Dizimnen ótiw" túymesin basıń.'
+        "qq": 'Dizimnen ótiw ushın tómendegi "Dizimnen ótiw" túymesin basıń.',
+        "ru": "Нажмите кнопку ниже, чтобы зарегистрироваться"
     },
     "register_btn": {
-        "qq": "Dizimnen ótiw"
+        "qq": "Dizimnen ótiw",
+        "ru": "Регистрация"
     },
     "register_example": {
-        "qq": "Atı famılyańızdı kiritiń.\n\nÚlgi:\nAliy Sadullaev"
+        "qq": "Atı famılyańızdı kiritiń.\n\nÚlgi:\nAliy Sadullaev",
+        "ru": "Введите свое имя и фамилию.\n\nНапример: Азизбек Бердимуратов"
     },
     "insterted_fullname":  {
-        "qq": "{} maǵlıwmatlarıńız kiritildi."
+        "qq": "{} maǵlıwmatlarıńız kiritildi.",
+        "ru": "{} успешно сохранен"
     },
     "olimpiada_list_text": {
         "qq": '''
 Olimpiada atı: <b>{}</b>
 Olimpiada baslanıw waqtı: <b>{} {}</b>
 Olimpiada tamamlanıw waqtı: <b>{} {}</b>
-Olimpiada kodı: <code>{}</code>\n\n'''
+Olimpiada kodı: <code>{}</code>\n\n''',
+    "ru": '''
+название: <b>{}</b>
+Время начала: <b>{}</b>
+время окончания: <b>{}</b>
+код: <code>{}</code>
+    '''
     },
     "not_started": {
-        "qq": "Olimpiada ele baslanbadi"
+        "qq": "Olimpiada ele baslanbadi",
+        "ru": "Олимпиада не началась"
     },
     "isset_olipada": {
-        "qq": "Siz aldın usi olimpiadaǵa qatnasqansız"
+        "qq": "Siz aldın usi olimpiadaǵa qatnasqansız",
+        "ru": "Вы уже участвовали в этой Олимпиаде"
     },
     "no_olimpiada": {
-        "qq": "Bizde házirshe heshqanday olimpiada joq."
+        "qq": "Bizde házirshe heshqanday olimpiada joq.",
+        "ru": "У нас сейчас нет Олимпиады"
     },
     "menu": {
-        "qq": ["Olimpiadalar dizimi", "Til sazlamaları"]
+        "qq": ["Olimpiadalar dizimi", "Til sazlamaları"],
+        "ru": ["Список в Олимпии", "Настройки"]
     },
 
     "select_lang": {
-        "qq": "Sizge qolaylı bolǵan tildi saylań."
+        "qq": "Sizge qolaylı bolǵan tildi saylań.",
+        "ru": "Выберите язык, который вам удобен"
     },
     "lang_btn": {
-        "qq": ["Qaraqalpaq tili", "Русский", "Maǵlıwmatlardı ózgertiw"]
+        "qq": ["Qaraqalpaq tili", "Русский", "Maǵlıwmatlardı ózgertiw"],
+        "ru": ["Qaraqalpaq tili", "Русский", "редактировать данные"]
     },
     
     "admin": {

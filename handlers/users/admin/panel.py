@@ -16,6 +16,14 @@ async def bot_cancel(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
     await call.message.answer("Cancel")
     
+@dp.callback_query_handler(text="ExportRegistedUsers")
+async def exportRegistedUsers(call: types.CallbackQuery):
+    try:
+        DBS.get_registed_users(DBS)
+        await call.answer()
+        await call.message.answer_document(open('./registedUsers.xlsx', 'rb'))
+    except: await call.answer("Maglumat tabilmadi", True)
+
 @dp.callback_query_handler(text="createOlimpiada")
 async def create_olimpiada_func(call: types.CallbackQuery):
     await call.answer()

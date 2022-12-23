@@ -23,7 +23,8 @@ admin_btn = InlineKeyboardMarkup().add(
     ).add(
         InlineKeyboardButton("Send Message", callback_data="sendMessage")
     ).add(
-        InlineKeyboardButton("Get Rank", callback_data="GetRank")
+        InlineKeyboardButton("Get Rank", callback_data="GetRank"),
+        InlineKeyboardButton("Export registered users", callback_data="ExportRegistedUsers")
     )
 
 cancel_btn = InlineKeyboardMarkup().add(

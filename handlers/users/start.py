@@ -21,6 +21,7 @@ async def check_joined(call: types.CallbackQuery):
 async def check_joined(call: types.CallbackQuery):
     await call.message.delete()
     UserLang = DBS.user_lang(DBS, call.from_user.id)
+    print(UserLang)
     if UserLang:
         await call.message.answer(
                 "menu",
