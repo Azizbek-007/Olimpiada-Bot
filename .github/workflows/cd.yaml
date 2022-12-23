@@ -1,0 +1,10 @@
+name: Python CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    - run: python3 app.py
