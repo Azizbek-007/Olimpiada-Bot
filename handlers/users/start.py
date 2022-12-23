@@ -69,12 +69,12 @@ async def olimpiada_list(msg: types.Message):
             _list = DBS.get_olimpiada(DBS)
             text, i = "", 1
             for x in _list:
-                print(x)
                 text += lang.get("olimpiada_list_text").get(UserLang).format(x[1], x[3], x[5], x[4], x[6], x[0])
                 i +=1
             await msg.reply(text)
         
-        except: 
+        except Exception as e:
+            print(e) 
             await msg.reply(lang.get("no_olimpiada").get(UserLang))
 
 @dp.message_handler(lambda msg: msg.text == lang.get("menu").get(DBS.user_lang(DBS, msg.from_id))[1])
