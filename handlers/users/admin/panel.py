@@ -1,5 +1,5 @@
 from aiogram import types
-from loader import dp, bot_id
+from loader import dp, bot_id, admins
 from aiogram.dispatcher.storage import FSMContext
 from states import StateCreateOlimpiada, StateSendMessage, StateChannelAdd, StateRank
 from keyboards.inline import admin_btn, cancel_btn, olimpiada_set_btn, olimpiada_list_btn, delete_channel_btn
@@ -7,7 +7,7 @@ from utils.db_api import db, DBS
 import re
 import asyncio
 
-@dp.message_handler(commands=['admin'])
+@dp.message_handler(commands=['admin'], user_id=admins)
 async def admin_hello(msg: types.Message):
     await msg.answer("Admin sazlamaları.", reply_markup=admin_btn)
 
