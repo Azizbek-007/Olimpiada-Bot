@@ -4,11 +4,12 @@ from aiogram.dispatcher.storage import FSMContext
 from states import StateCreateOlimpiada, StateSendMessage, StateChannelAdd, StateRank
 from keyboards.inline import admin_btn, cancel_btn, olimpiada_set_btn, olimpiada_list_btn, delete_channel_btn
 from utils.db_api import db, DBS
+import re
 import asyncio
 
 @dp.message_handler(commands=['admin'])
 async def admin_hello(msg: types.Message):
-    await msg.answer("Welcome to admin panel", reply_markup=admin_btn)
+    await msg.answer("Admin sazlamaları.", reply_markup=admin_btn)
 
 @dp.callback_query_handler(text="cancel", state="*")
 async def bot_cancel(call: types.CallbackQuery, state: FSMContext):
@@ -28,38 +29,44 @@ async def exportRegistedUsers(call: types.CallbackQuery):
 async def create_olimpiada_func(call: types.CallbackQuery):
     await call.answer()
     await StateCreateOlimpiada.name.set()
-    await call.message.answer("Olimpiada atin kiritin':", reply_markup=cancel_btn)
+    await call.message.answer("Olimpiada atın kiritiń.", reply_markup=cancel_btn)
 
 @dp.message_handler(state=StateCreateOlimpiada.name)
 async def set_olimpiada_name(msg:  types.Message, state: FSMContext):
     await state.update_data(name=msg.text)
     await StateCreateOlimpiada.answer.set()
-    await msg.answer("Olimpiada juwaplarin kiritin':", reply_markup=cancel_btn)
+    await msg.answer("Olimpiada juwapların kiritiń.", reply_markup=cancel_btn)
 
 
 @dp.message_handler(state=StateCreateOlimpiada.answer)
 async def set_olimpiada_answer(msg:  types.Message, state: FSMContext):
     await state.update_data(answer=msg.text)
     await StateCreateOlimpiada.start.set()
-    await msg.answer("Olimpiada baslaniw waqtin kiritin':", reply_markup=cancel_btn)
+    await msg.answer("Olimpiada baslanıw waqtın kiritiń.\njıl-ay-kún saat-minut\nÚlgi: 2022-12-20 12:00", reply_markup=cancel_btn)
 
 @dp.message_handler(state=StateCreateOlimpiada.start)
 async def set_olimpiada_start_date(msg: types.Message, state: FSMContext):
-    await state.update_data(start_date=msg.text)
-    await StateCreateOlimpiada.end.set()
-    await msg.answer("Olimpiada tamamlaniw waqtin kiritin':", reply_markup=cancel_btn)
+    regex = "^\d{4}-[0-1][0-2]-[0-3]\d\s([0-1][0-9]|2[0-3]):[0-5]{2}"
+    if re.search(regex, msg.text):
+        await state.update_data(start_date=msg.text)
+        await StateCreateOlimpiada.end.set()
+        await msg.answer("Olimpiada tamamlaniw waqtin kiritin':", reply_markup=cancel_btn)
+    else: await msg.answer("Waqitti qa'te kiritin'iz!\njıl-ay-kún saat-minut\nÚlgi: 2022-12-20 12:00")
 
 @dp.message_handler(state=StateCreateOlimpiada.end)
 async def set_olimpiada_start_date(msg: types.Message, state: FSMContext):
-    await state.update_data(end_date=msg.text)
-    data = await state.get_data()
-    await msg.answer(
-            f"<b>Olimpiada ati:</b> {data['name']}\n\n"
-            f"<b>Juwaplar:</b> {data['answer']}\n\n"
-            f"<b>baslaniw waqti:</b> {data['start_date']}\n\n"
-            f"<b>juwmaqlaniw waqti:</b> {data['end_date']}",
-            reply_markup=olimpiada_set_btn
-            )
+    regex = "^\d{4}-[0-1][0-2]-[0-3]\d\s([0-1][0-9]|2[0-3]):[0-5]{2}"
+    if re.search(regex, msg.text):
+        await state.update_data(end_date=msg.text)
+        data = await state.get_data()
+        await msg.answer(
+                f"<b>Olimpiada ati:</b> {data['name']}\n\n"
+                f"<b>Juwaplar:</b> {data['answer']}\n\n"
+                f"<b>baslaniw waqti:</b> {data['start_date']}\n\n"
+                f"<b>juwmaqlaniw waqti:</b> {data['end_date']}",
+                reply_markup=olimpiada_set_btn
+                )
+    else: await msg.answer("Waqitti qa'te kiritin'iz!\njıl-ay-kún saat-minut\nÚlgi: 2022-12-20 12:00")
 
 @dp.callback_query_handler(text="startOlimpiada", state="*")
 async def start_Set_Olimpiada(call: types.CallbackQuery, state: FSMContext):

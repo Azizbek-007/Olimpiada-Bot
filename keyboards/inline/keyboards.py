@@ -15,20 +15,20 @@ lang_btn = InlineKeyboardMarkup().add(
     )
 
 admin_btn = InlineKeyboardMarkup().add(
-    InlineKeyboardButton("Create Olimpiada", callback_data="createOlimpiada"),
-    InlineKeyboardButton("Delete Olimpiada", callback_data="deleteOlimpiada"),
+    InlineKeyboardButton("Olimpiada jaratıw", callback_data="createOlimpiada"),
+    InlineKeyboardButton("Olimpiadanı óshiriw", callback_data="deleteOlimpiada"),
     ).add(
-        InlineKeyboardButton("Add Channel", callback_data="addChannel"),
-         InlineKeyboardButton("Delete Channel", callback_data="deleteChannel")
+        InlineKeyboardButton("Kanal usınıs etiw", callback_data="addChannel"),
+         InlineKeyboardButton("Kanaldı óshiriw", callback_data="deleteChannel")
     ).add(
-        InlineKeyboardButton("Send Message", callback_data="sendMessage")
+        InlineKeyboardButton("Paydalanıwshılarǵa xabar jiberiw", callback_data="sendMessage")
     ).add(
-        InlineKeyboardButton("Get Rank", callback_data="GetRank"),
-        InlineKeyboardButton("Export registered users", callback_data="ExportRegistedUsers")
+        InlineKeyboardButton("Nátiyjelerdi alıw", callback_data="GetRank"),
+        InlineKeyboardButton("Dizimnen o'tkenlerdi aliw", callback_data="ExportRegistedUsers")
     )
 
 cancel_btn = InlineKeyboardMarkup().add(
-    InlineKeyboardButton("cancel", callback_data="cancel")
+    InlineKeyboardButton("Biykarlaw", callback_data="cancel")
     )
 
 olimpiada_set_btn = InlineKeyboardMarkup().add(
